@@ -2,7 +2,7 @@
 
 ![Screenshot of Tool](tool_screenshot.png)
 
->> A fast, multi-threaded Python scanner for checking Rdp(NlChecker) ;]
+> A fast, multi-threaded Python scanner for checking Rdp(NlChecker) ;]
 
 ---
 
