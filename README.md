@@ -1,17 +1,24 @@
 ### **RDP Port & Login Checker**
 
-![Screenshot of Tool](tool_screenshot.png)
+> A fast, multi-threaded Python scanner for checking RDP (NlChecker) ;]
 
-> A fast, multi-threaded Python scanner for checking Rdp(NlChecker) ;]
-
----
-
+-----
 
 ### **Features**
 
   * **Fast & Multi-threaded**
   * **Fully Flexible**
   * **Send Packet**
+
+-----
+
+### **Installation**
+
+1.  **Install the libraries:**
+    Open your terminal or command prompt, and run the command:
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 -----
 
