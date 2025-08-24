@@ -44,7 +44,7 @@ class Scanner:
 '''
         print(Colorate.Diagonal(Colors.red_to_blue, Center.XCenter(banner)))
 
-    def load_ips(self):
+    def _lip(self):
         try:
             with open(self.ip_file, "r", encoding="utf-8", errors="ignore") as f:
                 for line in f:
@@ -66,7 +66,7 @@ class Scanner:
             print(f"{R}File not found ;]{RE}")
             exit(1)
 
-    def check_rdp_login(self, ip, port):
+    def _crl(self, ip, port):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(self.timeout)
@@ -90,7 +90,7 @@ class Scanner:
         except:
             return False
 
-    def check_port(self, target):
+    def _cp(self, target):
         ip, port = target
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -99,7 +99,7 @@ class Scanner:
             if result == 0:
                 is_good = False
                 if self.send_rdp:
-                    is_good = self.check_rdp_login(ip, port)
+                    is_good = self._crl(ip, port)
                 else:
                     is_good = True
                 if is_good:
@@ -114,12 +114,12 @@ class Scanner:
                     with self.lock:
                         self.bad += 1
             else:
-                status_text = f"{R}[CLOSED]{RE}"
+                status_text = f"{R}[Closed]{RE}"
                 with self.lock:
                     self.bad += 1
             sock.close()
         except:
-            status_text = f"{Y}[ERROR]{RE}"
+            status_text = f"{Y}[Error]{RE}"
             with self.lock:
                 self.errors += 1
         finally:
@@ -128,12 +128,12 @@ class Scanner:
         return f"{status_text} {ip}:{port}"
 
     def run(self):
-        self.load_ips()
+        self._lip()
         self.clr()
         self.bnr()
         start_time = time.time()
         with concurrent.futures.ThreadPoolExecutor(max_workers=self.threads) as executor:
-            futures = [executor.submit(self.check_port, target) for target in self.targets]
+            futures = [executor.submit(self._cp, target) for target in self.targets]
             with tqdm(total=self.total, ncols=100, bar_format="{desc}") as pbar:
                 for future in concurrent.futures.as_completed(futures):
                     status = future.result()
